@@ -124,104 +124,48 @@ order_items
 
 
 # How to Test (Using Postman)
-1️⃣ Register
 
-Endpoint:
-POST http://localhost:8000/api/register
-
-Body (JSON):
-
-{
-  "name": "Test User",
-  "email": "testuser@example.com",
-  "password": "password123"
-}
-
-2️⃣ Login
-
-Endpoint:
-POST http://localhost:8000/api/login
-
-Body (JSON):
-
-{
-  "email": "testuser@example.com",
-  "password": "password123"
-}
-
-
-Copy the token from the response for authorized requests.
-
-3️⃣ Get Products (Public)
-
-Endpoints:
-
-GET http://localhost:8000/api/products
-GET http://localhost:8000/api/products?page=2
-GET http://localhost:8000/api/products?search=iphone
-
-4️⃣ Create Product (Admin Only)
-
-Endpoint:
-POST http://localhost:8000/api/products
-
-Headers:
-Authorization: Bearer <ADMIN_TOKEN>
-
-Body (JSON):
-
-{
-  "name": "iPhone 15",
-  "description": "Latest model Apple phone",
-  "price": 1200,
-  "stock": 10
-}
-
-5️⃣ Create Order (User Only)
-
-Endpoint:
-POST http://localhost:8000/api/orders
-
-Headers:
-Authorization: Bearer <USER_TOKEN>
-
-Body (JSON):
-
-{
-  "product_id": 1,
-  "quantity": 2
-}
+| Step               | Description                            | Endpoint                                                                                                                                              | Headers                               | Body                                                                                                                                    |
+| ------------------ | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| 1️⃣ Register       | Register a new user                    | `POST http://localhost:8000/api/register`                                                                                                             | —                                     | `json { "name": "Test User", "email": "testuser@example.com", "password": "password123" } `                                             |
+| 2️⃣ Login          | Login a user                           | `POST http://localhost:8000/api/login`                                                                                                                | —                                     | `json { "email": "testuser@example.com", "password": "password123" } `<br>💡 Copy the `token` from the response for authorized requests |
+| 3️⃣ Get Products   | Get all products / pagination / search | `GET http://localhost:8000/api/products`<br>`GET http://localhost:8000/api/products?page=2`<br>`GET http://localhost:8000/api/products?search=iphone` | —                                     | —                                                                                                                                       |
+| 4️⃣ Create Product | Create a product (Admin only)          | `POST http://localhost:8000/api/products`                                                                                                             | `Authorization: Bearer <ADMIN_TOKEN>` | `json { "name": "iPhone 15", "description": "Latest model Apple phone", "price": 1200, "stock": 10 } `                                  |
+| 5️⃣ Create Order   | Create an order (User only)            | `POST http://localhost:8000/api/orders`                                                                                                               | `Authorization: Bearer <USER_TOKEN>`  | `json { "product_id": 1, "quantity": 2 } `                                                                                              |
 
 
 
 ## Installation Instructions
 
-1. Extract Project
-unzip mini-ecommerce.zip
-cd mini-ecommerce
+```bash
+1. Clone the repository:  
+git clone <https://github.com/mishimanto/mini-ecommerce-api>
+cd mini-ecommerce-api
 
-2. Install Dependencies
+
+2. Install dependencies:
 composer install
 
-3. Create .env
-cp .env.example .env
+3. Copy .env.example → .env and update database credentials:
 
-
-Update DB settings:
-
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
 DB_DATABASE=mini_ecommerce
 DB_USERNAME=root
 DB_PASSWORD=
 
-4. Database Config
-php artisan migrate
-php artisan db:seed
-
-5. Generate Key
+4. Generate Key
 php artisan key:generate
 
-6. Start Server
+5. Run migrations and seeders :
+php artisan migrate 
+php artisan db:seed 
+
+
+6.Run the development server:
 php artisan serve
 
 7. Access
 http://localhost:8000
+
