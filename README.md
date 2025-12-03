@@ -132,7 +132,7 @@ order_items
 | 5️⃣ Create Order   | Create an order (User only)            | `POST http://localhost:8000/api/orders`                                                                                                               | `Authorization: Bearer <USER_TOKEN>`  | `json { "product_id": 1, "quantity": 2 } `                                                                                              |
 
 
-## Installation Instructions
+# Installation Instructions
 
 ```bash
 1. Clone the repository:  
