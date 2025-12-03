@@ -1,60 +1,59 @@
-📦 Mini E-commerce REST API (Laravel Backend)
-<p align="center"> <img src="https://laravel.com/img/logomark.min.svg" width="90"> </p>
-📘 Overview
+# Mini E-commerce REST API (Laravel + Sanctum)
 
-This is a Mini E-commerce REST API built using Laravel 10+ and PHP 8.2, designed for learning and small-scale backend development.
+<p align="center">
+  <a href="https://laravel.com" target="_blank">
+    <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="300" alt="Laravel Logo">
+  </a>
+</p>
 
-This API includes:
+## Overview
 
-User registration & login using Laravel Sanctum (Personal Access Tokens)
-Admin/User role-based access control
-Product CRUD (Admin only)
-Order creation with order items (Authenticated users)
-Clean JSON responses with validation
-Ready SQL database included (admin & user accounts seeded)
-All endpoints are tested using Postman.
+This is a **Mini E-commerce REST API** built using **Laravel 12**.  
+It demonstrates:
 
-# Technologies Used
+- User registration & login with **Laravel Sanctum**  
+- Role-based access control (Admin/User)  
+- Product management (Admin only)  
+- Order management (Authenticated users)  
+- Pagination & search for products  
+- Request validation and proper JSON responses  
+
+## Technologies Used
 
 | Technology          | Version | Description                 |
 | ------------------- | ------- | --------------------------- |
 | **Laravel**         | 12.x    | Backend framework           |
 | **PHP**             | 8.2.12  | Server-side language        |
 | **MySQL / MariaDB** | 10.4+   | Relational database         |
-| **Laravel Sanctum** | —       | API Token Authentication    |
+| **Laravel Sanctum** | Latest  | API Token Authentication    |
 | **Composer**        | Latest  | PHP dependency manager      |
-| **Node.js & NPM**   | Latest  | Frontend asset build system |
 | **Postman**         | Latest  | API testing tool            |
 
 
-# Features
+## Features
 
-🔐 Authentication
+### User Authentication
+- Register new users  
+- Login & receive API token  
+- Role-based access (admin/user)  
 
-Register new user
-Login and receive API token
-Logout using token
-Admin/User role support
+### Products
+- Admin can create products  
+- Public endpoint to list products  
+- Search products by name  
+- Pagination  
 
-📦 Products 
+### Orders
+- Authenticated users can place orders  
+- Total price calculated automatically   
 
-Create product (Admin Only)
-View product list
+### Validation & Error Handling
+- All requests validated  
+- Proper HTTP status codes & structured JSON responses 
+- Unauthorized access checks
 
-🛒 Orders 
 
-Create order
-Each order saves multiple items
-Order total calculated automatically
-User can view their own orders
-
-⚠ Validation & Error Handling
-
-All inputs validated
-Clear JSON errors
-Unauthorized access checks
-
-# Database Structure
+## Database Structure
 
 SQL file: mini_ecommerce.sql
 
@@ -105,88 +104,97 @@ order_items
 | updated_at | TIMESTAMP     | —                 |
 
 
-# Default Credentials
+## Default Credentials
 
-Admin
-Email: admin@test.com
-Password: password
-Role: admin
+| Role  | Email              | Password |
+| ----- | ------------------ | -------- |
+| Admin | [admin@gmail.com]  | shimanto |
+| User  | [user@gmail.com]   | shimanto |
 
-User
-Email: user@test.com
-Password: password
-Role: user
 
-# API Endpoints
-🔐 Auth Endpoints
-Method	Endpoint	Description
-POST	/api/register	Register new user
-POST	/api/login	Login & get token
+## API Endpoints
 
-📦 Product Endpoints
-Method	Endpoint	Access	Description
-GET	/api/products	Public	List all products
-GET	/api/products/{id}	Public	Show single product
-POST	/api/products	Admin	Create product
+| Method | Endpoint | Description | Access |
+|--------|---------|------------|--------|
+| POST | `/api/register` | Register a new user | Public |
+| POST | `/api/login` | Login & receive API token | Public |
+| GET | `/api/products` | List products with pagination & search | Public |
+| POST | `/api/products` | Create a new product | Admin only |
+| POST | `/api/orders` | Place a new order | Authenticated users |
 
-🛒 Order Endpoints
-Method	Endpoint	Access
-POST	/api/orders	Authenticated
-GET	/api/orders	Authenticated
 
 # How to Test (Using Postman)
-1️⃣ Register User
+1️⃣ Register
 
-POST → http://localhost:8000/api/register
+Endpoint:
+POST http://localhost:8000/api/register
 
-Body:
+Body (JSON):
 
 {
-    "name": "User Name",
-    "email": "test@example.com",
-    "password": "password"
+  "name": "Test User",
+  "email": "testuser@example.com",
+  "password": "password123"
 }
 
 2️⃣ Login
 
-POST → http://localhost:8000/api/login
+Endpoint:
+POST http://localhost:8000/api/login
+
+Body (JSON):
 
 {
-    "email": "admin@test.com",
-    "password": "password"
+  "email": "testuser@example.com",
+  "password": "password123"
 }
 
 
-Copy the returned token.
+Copy the token from the response for authorized requests.
 
-3️⃣ Use Token
+3️⃣ Get Products (Public)
 
-Add this header:
+Endpoints:
 
-Authorization: Bearer <token>
+GET http://localhost:8000/api/products
+GET http://localhost:8000/api/products?page=2
+GET http://localhost:8000/api/products?search=iphone
 
 4️⃣ Create Product (Admin Only)
 
-POST → /api/products
+Endpoint:
+POST http://localhost:8000/api/products
+
+Headers:
+Authorization: Bearer <ADMIN_TOKEN>
+
+Body (JSON):
 
 {
-    "name": "Sample Product",
-    "description": "Demo description",
-    "price": 199,
-    "stock": 20
+  "name": "iPhone 15",
+  "description": "Latest model Apple phone",
+  "price": 1200,
+  "stock": 10
 }
 
-5️⃣ Create Order
+5️⃣ Create Order (User Only)
 
-POST → /api/orders
+Endpoint:
+POST http://localhost:8000/api/orders
+
+Headers:
+Authorization: Bearer <USER_TOKEN>
+
+Body (JSON):
 
 {
-    "items": [
-        { "product_id": 1, "quantity": 2 }
-    ]
+  "product_id": 1,
+  "quantity": 2
 }
 
-# Installation Instructions
+
+
+## Installation Instructions
 
 1. Extract Project
 unzip mini-ecommerce.zip
