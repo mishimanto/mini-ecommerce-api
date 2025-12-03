@@ -49,10 +49,10 @@ DB_DATABASE=mini_ecommerce
 DB_USERNAME=root
 DB_PASSWORD=
 
-4. Generate Key
+4. Generate Key:
 php artisan key:generate
 
-5. Run migrations and seeders :
+5. Run migrations and seeders:
 php artisan migrate 
 php artisan db:seed 
 
@@ -60,7 +60,7 @@ php artisan db:seed
 6.Run the development server:
 php artisan serve
 
-7. Access
+7. Access:
 http://localhost:8000
 
 
